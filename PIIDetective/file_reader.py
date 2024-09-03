@@ -4,7 +4,7 @@ import PyPDF2
 from pdfminer.high_level import extract_text as pdfminer_extract_text
 from bs4 import BeautifulSoup
 from PIL import Image
-import pytesseract
+import easyocr
 
 def read_text_from_file(file_path):
     ext = os.path.splitext(file_path)[1].lower()
@@ -50,6 +50,6 @@ def read_text_from_html(file_path):
         return soup.get_text()
 
 def read_text_from_image(file_path):
-    image = Image.open(file_path)
-    text = pytesseract.image_to_string(image)
+    reader = easyocr.Reader(['en','hi'])  # specify the language
+    text = reader.readtext(file_path)
     return text
