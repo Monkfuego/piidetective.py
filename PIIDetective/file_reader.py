@@ -4,7 +4,7 @@ import PyPDF2
 from pdfminer.high_level import extract_text as pdfminer_extract_text
 from bs4 import BeautifulSoup
 from PIL import Image
-import easyocr
+
 
 def read_text_from_file(file_path):
     ext = os.path.splitext(file_path)[1].lower()
@@ -17,8 +17,6 @@ def read_text_from_file(file_path):
         return read_text_from_pdf(file_path)
     elif ext == '.html' or ext == '.htm':
         return read_text_from_html(file_path)
-    elif ext in ['.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.gif']:
-        return read_text_from_image(file_path)
     else:
         raise ValueError(f"Unsupported file extension: {ext}")
 
@@ -49,7 +47,4 @@ def read_text_from_html(file_path):
         soup = BeautifulSoup(file, 'html.parser')
         return soup.get_text()
 
-def read_text_from_image(file_path):
-    reader = easyocr.Reader(['en','hi'])  # specify the language
-    text = reader.readtext(file_path)
-    return text
+
